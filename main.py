@@ -2,16 +2,15 @@ from distutils.log import debug
 from flask import Flask, render_template
 from datetime import datetime
 import json
-from scrape.stock import get_stock_data
+from scrape.stock import get_US_stock
 
 app = Flask(__name__)
 
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock_data():
-    columns, date, Highest, Lowest, Openprice, Closeprice, Vol, Adj_Close = get_stock_data(
-        'TSLA')
-    time = get_time()
+    # columns, values = get_tw_stock_datas()
+    columns, values = get_US_stock()
     return render_template('stock.html', **locals())
 
 

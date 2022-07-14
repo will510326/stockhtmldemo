@@ -4,24 +4,26 @@ import pandas_datareader as pdr
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
-def get_stock_data(stock, start=2022, end=2023):
-    datas = []
-    try:
-        df = pdr.get_data_yahoo(stock, start, end)
-        columns = df.columns  # 欄位
-        date = df.index #日期
-        Highest = df['High'].values  # 最高價
-        Lowest = df['Low'].values  # 最低價
-        Openprice = df['Open'].values  # 開盤價
-        Closeprice = df['Close'].values  # 收盤價
-        Vol = df['Volume'].values  # 成交量
-        Adj_Close = df['Adj Close'].values  # 調整後收盤價
-        datas.append([date, Highest, Lowest, Openprice,
-                     Closeprice, Vol, Adj_Close])
-    except Exception as e:
-        print(e)
-    return columns,datas
+def get_US_stock():
+    df = pdr.get_data_yahoo('TSLA', 2022, 2023)
+    times = df.index
+    columns = [	'Date', 'High'	, 'Low'	, 'Open'	,
+                'Close'	, 'Volume'	, 'Adj Close']
+    datas = []  # time
+    for t in times:
+        datas.append(t)
+    df_highest = df['High'].to_list()
+    df_lowest = df['Low'].to_list()
+    df_open = df['Open'].to_list()
+    df_Close = df['Close'].to_list()
+    df_vol = df['Volume'].to_list()
+    df_adj = df['Adj Close'].to_list()
+    values = []
+    for i in range(len(df_highest)):
+        values.append([datas[i], round(df_highest[i], 2), round(df_lowest[i], 2),
+                       round(df_open[i], 2), round(df_Close[i], 2), round(df_vol[i], 2), round(df_adj[i], 2)])
+    return columns, values
 
 
 if __name__ == '__main__':
-    get_stock_data('TSLA')
+    get_US_stock()
