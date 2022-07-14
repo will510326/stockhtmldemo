@@ -7,6 +7,11 @@ from scrape.stock import get_US_stock
 app = Flask(__name__)
 
 
+@app.route('/stock-chart')
+def stock_chart():
+    return render_template('stock-chart.html')
+
+
 @app.route('/stock', methods=['GET', 'POST'])
 def stock_data():
     # columns, values = get_tw_stock_datas()

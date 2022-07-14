@@ -26,12 +26,12 @@ td:first-child {
     background-color: chartreuse;
 }
 
-td:nth-child(3) {
+/* td:nth-child(3) {
     background-color: tomato;
     color: white;
     font-size: 20px;
     font-weight: 900;
-}
+} */
 
 input[type="submit"] {
     margin: 6px 0px;
