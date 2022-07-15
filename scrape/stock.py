@@ -6,7 +6,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 def get_US_stock():
     df = pdr.get_data_yahoo('TSLA', 2022, 2023)
-    times = df.index
+    times = df.index.astype(str)
     columns = [	'Date', 'High'	, 'Low'	, 'Open'	,
                 'Close'	, 'Volume'	, 'Adj Close']
     datas = []  # time
