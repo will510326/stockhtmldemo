@@ -17,8 +17,8 @@ def get_stock_json():
                     datas[i][3],
                     datas[i][4],
                     datas[i][2],
-                    datas[i][1]])
-    print(data)
+                    datas[i][1],
+                    datas[i][5]])
     return json.dumps({'data': data}, ensure_ascii=False)
 
 
