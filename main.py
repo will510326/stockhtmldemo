@@ -22,6 +22,11 @@ def get_stock_json():
     return json.dumps({'data': data}, ensure_ascii=False)
 
 
+@app.route('/stock-bulma-chart')
+def stock_bulma():
+    return render_template('stock-bulma.html')
+
+
 @ app.route('/stock-chart')
 def stock_chart():
     return render_template('stock-chart.html')
