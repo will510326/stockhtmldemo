@@ -4,8 +4,8 @@ import pandas_datareader as pdr
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
-def get_US_stock():
-    df = pdr.get_data_yahoo('TSLA', 2022, 2023)
+def get_US_stock(stock='TSLA', start=2021, end=2023):
+    df = pdr.get_data_yahoo(stock, start, end)
     times = df.index.astype(str)
     columns = [	'Date', 'High'	, 'Low'	, 'Open'	,
                 'Close'	, 'Volume'	, 'Adj Close']

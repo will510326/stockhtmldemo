@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from datetime import datetime
 import json
 from scrape.stock import get_US_stock
@@ -25,18 +25,6 @@ def get_stock_json():
 @app.route('/stock-bulma-chart')
 def stock_bulma():
     return render_template('stock-bulma.html')
-
-
-@ app.route('/stock-chart')
-def stock_chart():
-    return render_template('stock-chart.html')
-
-
-@ app.route('/stock', methods=['GET', 'POST'])
-def stock_data():
-    # columns, values = get_tw_stock_datas()
-    columns, values = get_US_stock()
-    return render_template('stock.html', **locals())
 
 
 @ app.route('/')
