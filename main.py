@@ -1,24 +1,20 @@
 from flask import Flask, render_template, request
 from datetime import datetime
 import json
-from scrape.stock import get_US_stock
+from scrape.stock import get_US_stock, get_name_stock
 
 app = Flask(__name__)
 
 
+@app.route('/stock-json/<stock>/<start>/<end>', methods=['POST'])
+def get_stockname_json(stock, start, end):
+    data = get_name_stock(stock, start, end)
+    return json.dumps({'data': data}, ensure_ascii=False)
+
+
 @app.route('/stock-json', methods=['POST'])
 def get_stock_json():
-    columns, values = get_US_stock()
-    # X軸
-    datas = [value for value in values]
-    data = []
-    for i in range(len(datas)):
-        data.append([datas[i][0].replace('-', '/'),
-                    datas[i][3],
-                    datas[i][4],
-                    datas[i][2],
-                    datas[i][1],
-                    datas[i][5]])
+    data = get_US_stock()
     return json.dumps({'data': data}, ensure_ascii=False)
 
 

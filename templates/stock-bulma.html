@@ -27,25 +27,12 @@
                 <div class="column">
                     <div class="card  has-text-centered">
                         <header class="card-header">
-                            <p class="card-header-title is-size-4 is-centered has-background-danger has-text-white"
-                                id="stock_high_site">
-                                N/A
-                            </p>
-                        </header>
-                        <div class="card-content is-size-4" id="stock_high_value">
-                            0
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="card  has-text-centered">
-                        <header class="card-header">
                             <p class="card-header-title is-size-4 is-centered has-background-success has-text-white"
-                                id="stock_low_site">
+                                id="stock_name_site">
                                 N/A
                             </p>
                         </header>
-                        <div class="card-content is-size-4" id="stock_low_value">
+                        <div class="card-content is-size-4" id="stock_name_time">
                             0
                         </div>
                     </div>
@@ -53,18 +40,16 @@
             </div>
             <div class="columns is-vcentered">
                 <div class="column is-one-third">
-                    標的<input class="input is-primary is-size-6" type="text" placeholder="Primary input">
+                    標的<input class="input is-primary is-size-6" type="text" placeholder="Primary input" id="stock_name">
                 </div>
                 <div class="column">
-                    時間自<br><input class="input is-size-6" type="date" name="" id="">
+                    時間自<br><input class="input is-size-6" type="date" name="stock_start" id="stock_start">
                 </div>
                 <div class="column">
-                    至<br><input class="input is-size-6" type="date" name="" id="">
+                    至<br><input class="input is-size-6" type="date" name="stock_end" id="stock_end">
                 </div>
                 <p class="mt-2">
-                    <button class="button is-info is-medium" onclick="draw_stock()">
-                        更新資料
-                    </button>
+                    <input class="button is-warning" type="button" value="確定" id="stock_btn">
                 </p>
             </div>
             <div id="main" style="width: 100%;height:500px;"></div>
