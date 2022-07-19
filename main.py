@@ -1,9 +1,21 @@
 from flask import Flask, render_template, request
 from datetime import datetime
 import json
-from scrape.stock import get_US_stock
+from scrape.stock import get_US_stock, get_TW_stock
 
 app = Flask(__name__)
+
+
+@app.route('/stocktw-json/<stock>/<start>/<end>', methods=['POST'])
+def get_stocknametw_json(stock, start, end):
+    data = get_TW_stock(stock, start, end)
+    return json.dumps({'data': data}, ensure_ascii=False)
+
+
+@app.route('/stocktw-json', methods=['POST'])
+def gettw_stock_json():
+    data = get_TW_stock()
+    return json.dumps({'data': data}, ensure_ascii=False)
 
 
 @app.route('/stock-json/<stock>/<start>/<end>', methods=['POST'])
