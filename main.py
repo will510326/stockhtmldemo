@@ -1,14 +1,14 @@
 from flask import Flask, render_template, request
 from datetime import datetime
 import json
-from scrape.stock import get_US_stock, get_name_stock
+from scrape.stock import get_US_stock
 
 app = Flask(__name__)
 
 
 @app.route('/stock-json/<stock>/<start>/<end>', methods=['POST'])
 def get_stockname_json(stock, start, end):
-    data = get_name_stock(stock, start, end)
+    data = get_US_stock(stock, start, end)
     return json.dumps({'data': data}, ensure_ascii=False)
 
 
