@@ -1,9 +1,26 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from datetime import datetime
 import json
 from scrape.stock import get_US_stock, get_TW_stock
 
 app = Flask(__name__)
+
+
+@app.route('/test2', methods=['POST'])
+def test2():
+    a, b, c = get_US_stock()
+    return json.dump({'k': b, 'd': c}, ensure_ascii=False)
+
+
+@app.route('/test1')
+def test1():
+    return render_template('test.html')
+
+
+@app.route('/stockd_us-json')
+def get_kdus_json():
+    data, data_kd = get_US_stock()
+    return json.dumps({'data': data_kd}, ensure_ascii=False)
 
 
 @app.route('/stocktw-json/<stock>/<start>/<end>', methods=['POST'])
@@ -20,13 +37,13 @@ def gettw_stock_json():
 
 @app.route('/stock-json/<stock>/<start>/<end>', methods=['POST'])
 def get_stockname_json(stock, start, end):
-    data = get_US_stock(stock, start, end)
+    data, data_kd = get_US_stock(stock, start, end)
     return json.dumps({'data': data}, ensure_ascii=False)
 
 
 @app.route('/stock-json', methods=['POST'])
 def get_stock_json():
-    data = get_US_stock()
+    data, data_kd = get_US_stock()
     return json.dumps({'data': data}, ensure_ascii=False)
 
 

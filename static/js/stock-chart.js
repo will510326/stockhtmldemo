@@ -1,29 +1,27 @@
 const chart1E1 = document.querySelector('#main');
+const chart3E3 = document.querySelector('#kd_us');
 const stockNameSite = document.querySelector('#stock_name_site'); // stock顯示名子
 const stockNameTime = document.querySelector('#stock_name_time'); // stock顯示時間
 
 
 
 
-$('#stock_btn').click(()=>{
+$('#stock_btn').click(() => {
 	let stock = $('#stock_name').val();
 	let start = $('#stock_start').val();
 	let end = $('#stock_end').val();
 	stockNameSite.innerText = stock;
 	stockNameTime.innerText = `${start}~${end}`;
 	draw_name_stock(stock, start, end);
-}
-);
+});
 
 
 let chart1 = echarts.init(chart1E1);
-
 window.onresize = function () {
 	chart1.resize();
-};//自動調整圖片視窗大小
-$(document).ready(() => {
-	draw_stock();
-}); //網頁整個渲染後才執行內部函式
+	chart2.resize();
+	chart3.resize();
+}; //自動調整圖片視窗大小
 
 //繪製stockfunction
 function draw_stock() {
@@ -45,8 +43,8 @@ function draw_stock() {
 	function drawchart1(data) {
 		var option;
 
-		const upColor = '#00da3c';
-		const downColor = '#ec0000';
+		const upColor = '#ec0000';
+		const downColor = '#00da3c';
 
 		function splitData(data) {
 			let categoryData = [];
@@ -609,34 +607,65 @@ function draw_name_stock(stock, start, end) {
 		option && chart1.setOption(option);
 	}
 }
+// 美股KD線
+let chart3 = echarts.init(chart3E3);
 
+function drawkd_us() {
+	chart3.showLoading();
+	$.ajax({
+		url: "kd_us-json",
+		type: "POST",
+		dataType: "json",
+		success: (data) => {
+			chart3.hideLoading();
+			drawkduw(data['data']);
+		},
+		error: () => {
+			chart3.hideLoading();
+			alert("資料讀取失敗");
+		}
+	})
+
+	function drawkduw(data) {
+		var option;
+
+		option = {
+			xAxis: {
+				type: 'category',
+				data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [{
+				data: [150, 230, 224, 218, 135, 147, 260],
+				type: 'line'
+			}]
+		};
+
+		option && chart3.setOption(option);
+	}
+}
 
 const chart2E2 = document.querySelector('#main2');
 const stocktwNameSite = document.querySelector('#stocktw_name_site'); // stock顯示名子
 const stocktwNameTime = document.querySelector('#stocktw_name_time'); // stock顯示時間
 
+let chart2 = echarts.init(chart2E2);
 
+$(document).ready(() => {
+	draw_stock();
+	drawtw_stock();
+}); //網頁整個渲染後才執行內部函式
 
-
-$('#stock_btn').click(()=>{
+$('#stocktw_btn').click(() => {
 	let stock = $('#stocktw_name').val();
 	let start = $('#stocktw_start').val();
 	let end = $('#stocktw_end').val();
 	stocktwNameSite.innerText = stock;
 	stocktwNameTime.innerText = `${start}~${end}`;
 	drawtw_name_stock(stock, start, end);
-}
-);
-
-
-let chart2 = echarts.init(chart2E2);
-
-window.onresize = function () {
-	chart2.resize();
-};//自動調整圖片視窗大小
-$(document).ready(() => {
-	drawtw_stock();
-}); //網頁整個渲染後才執行內部函式
+});
 
 //繪製stockfunction
 function drawtw_stock() {
@@ -647,7 +676,7 @@ function drawtw_stock() {
 		dataType: "json",
 		success: (data) => {
 			chart2.hideLoading();
-			drawchart1(data['data']);
+			drawtwchart1(data['data']);
 		},
 		error: () => {
 			chart2.hideLoading();
@@ -655,11 +684,11 @@ function drawtw_stock() {
 		}
 	})
 
-	function drawchart1(data) {
+	function drawtwchart1(data) {
 		var option;
 
-		const upColor = '#00da3c';
-		const downColor = '#ec0000';
+		const upColor = '#ec0000';
+		const downColor = '#00da3c';
 
 		function splitData(data) {
 			let categoryData = [];
@@ -950,8 +979,8 @@ function drawtw_name_stock(stock, start, end) {
 	function drawchart1(data) {
 		var option;
 
-		const upColor = '#00da3c';
-		const downColor = '#ec0000';
+		const upColor = '#ec0000';
+		const downColor = '#00da3c';
 
 		function splitData(data) {
 			let categoryData = [];
