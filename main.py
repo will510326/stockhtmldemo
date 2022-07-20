@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from datetime import datetime
 import json
 from scrape.stock import get_US_stock, get_TW_stock
