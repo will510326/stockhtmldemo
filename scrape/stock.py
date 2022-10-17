@@ -1,9 +1,35 @@
 import pandas as pd
 import ssl
 import pandas_datareader as pdr
+from regex import E
 import talib
 ssl._create_default_https_context = ssl._create_unverified_context
 
+def get_US_kd(stock='TSLA', start=2021, end=2023):
+    try:
+        df = pdr.get_data_yahoo(stock, start, end)
+        df['k'], df['d'] = talib.STOCH(df['High'], df['Low'], df['Close'], fastk_period=9, slowk_period=3,slowk_matype=1, slowd_period=3, slowd_matype=1)
+        df_k = df['k'].to_list()
+        df_d = df['d'].to_list()
+        times = df.index.astype(str)
+        datas = []  # time
+        for t in times:
+            datas.append(t)
+
+        if df_k and df_d:
+            for i in range(12):
+                df_k.pop(0)
+                df_d.pop(0)
+
+        k_datas = []
+        for i in range(len(df_k)):
+            k_datas.append(round(df_k[i], 2))
+        d_datas = []
+        for i in range(len(df_d)):
+            d_datas.append(round(df_d[i], 2))
+    except Exception as e:
+        print(e)
+    return datas, k_datas, d_datas
 
 def get_TW_stock(stock='2330', start=2022, end=2023):
     try:
@@ -51,8 +77,7 @@ def get_US_stock(stock='TSLA', start=2021, end=2023):
         df_Close = df['Close'].to_list()
         df_vol = df['Volume'].to_list()
         df_adj = df['Adj Close'].to_list()
-        df_k = df['k'].to_list()
-        df_d = df['d'].to_list()
+
 
         values = []
         for i in range(len(df_highest)):
@@ -67,12 +92,6 @@ def get_US_stock(stock='TSLA', start=2021, end=2023):
                                stock_datas[i][2],  # lowest
                                stock_datas[i][1],  # highest
                                stock_datas[i][5]])  # volumn
-        k_datas = []
-        for i in range(len(df_k)):
-            k_datas.append(round(df_k[i], 2))
-        d_datas = []
-        for i in range(len(df_d)):
-            d_datas.append(round(df_d[i], 2))
     except Exception as e:
         print(e)
     return stock_data

@@ -13,21 +13,22 @@ $(document).ready(() => {
 function drawkd() {
     // chart1.showLoading();
     $.ajax({
-        url: "/test1-json",
+        url: "/stock-kd-json",
         type: "POST",
         dataType: "json",
-        success: (a,b) => {
+        success: (data) => {
             // chart1.hideLoading();
-            console.log(a);
-            drawkdus(a);
+            console.log(data);
+            drawkdus(data['time'],data['datas_k'],data['datas_d']);
         },
-        error: () => {
+        error: (data) => {
             // chart1.hideLoading();
             alert("資料讀取失敗");
+            console.log(data)
         }
     })
 
-    function drawkdus(k, d) {
+    function drawkdus(time, k, d) {
         var option;
 
         option = {
@@ -57,12 +58,12 @@ function drawkd() {
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                data: time
             },
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value} °C'
+                    formatter: '{value}'
                 }
             },
             series: [{

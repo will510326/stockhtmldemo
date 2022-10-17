@@ -1,10 +1,18 @@
 from flask import Flask, render_template
 from datetime import datetime
 import json
-from scrape.stock import get_US_stock, get_TW_stock
+from scrape.stock import get_US_stock, get_TW_stock, get_US_kd
 
 app = Flask(__name__)
 
+@app.route('/stock-kd-json', methods = ['POST'])
+def get_KD_datas():
+    time, k, d = get_US_kd()
+    return json.dumps({'time':time, 'datas_k':k, 'datas_d':d})
+    
+@app.route('/stock-kd')
+def get_KD_us():
+    return render_template('test.html')
 
 @app.route('/stocktw-json/<stock>/<start>/<end>', methods=['POST'])
 def get_stocknametw_json(stock, start, end):
